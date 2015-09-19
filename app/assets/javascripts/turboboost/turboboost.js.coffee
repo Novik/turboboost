@@ -53,7 +53,7 @@ turboboostComplete = (e, resp) ->
     if (location = resp.getResponseHeader('Location')) and !$el.attr('data-no-turboboost-redirect')
       e.preventDefault()
       e.stopPropagation()
-      Turbolinks.visit(location)
+      Turbolinks.visit(location, $el.data('turbolinks'))
       return
     else
       enableForm $el if isForm and Turboboost.handleFormDisabling
@@ -74,7 +74,7 @@ turboboostBeforeSend = (e, xhr, settings) ->
   $el = $(@)
   disableForm $el if Turboboost.handleFormDisabling
   if settings.type is "GET" and !$el.attr('data-no-turboboost-redirect')
-    Turbolinks.visit [@action, $el.serialize()].join("?")
+    Turbolinks.visit( [@action, $el.serialize()].join("?"), $el.data('turbolinks'))
     return false
 
 renderFunctionForOption = (option) ->
